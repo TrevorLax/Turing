@@ -103,6 +103,10 @@ function AbstractMCMC.sample(
     discard_initial=-1,
     kwargs...,
 )
+
+    println("Turing hmc.jl")
+    println(resume_from)
+
     if resume_from === nothing
         # If `nadapts` is `-1`, then the user called a convenience
         # constructor like `NUTS()` or `NUTS(0.65)`,
@@ -423,10 +427,12 @@ function NUTS(
     space::Tuple;
     adtype::ADTypes.AbstractADType=Turing.DEFAULT_ADTYPE,
 ) where {metricT}
+    println("test 2")
     return NUTS{typeof(adtype),space,metricT}(n_adapts, δ, max_depth, Δ_max, ϵ, adtype)
 end
 
 function NUTS(n_adapts::Int, δ::Float64, ::Tuple{}; kwargs...)
+    println("test 1")
     return NUTS(n_adapts, δ; kwargs...)
 end
 
@@ -440,6 +446,7 @@ function NUTS(
     metricT=AHMC.DiagEuclideanMetric,
     adtype::ADTypes.AbstractADType=Turing.DEFAULT_ADTYPE,
 )
+    println("test 3")
     return NUTS(n_adapts, δ, max_depth, Δ_max, init_ϵ, metricT, space; adtype=adtype)
 end
 
@@ -451,10 +458,12 @@ function NUTS(
     metricT=AHMC.DiagEuclideanMetric,
     adtype::ADTypes.AbstractADType=Turing.DEFAULT_ADTYPE,
 )
+    println("test 4")
     return NUTS(-1, δ, max_depth, Δ_max, init_ϵ, metricT, (); adtype=adtype)
 end
 
 function NUTS(; kwargs...)
+    println("test 5")
     return NUTS(-1, 0.65; kwargs...)
 end
 
